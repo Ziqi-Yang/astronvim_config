@@ -26,6 +26,7 @@ local config = {
       relativenumber = true, -- sets vim.opt.relativenumber
       clipboard = "",
       splitright= false, -- vsplit behaviour
+      autochdir=true, -- auto change path to current folder
     },
     g = {
       -- global setting
@@ -246,6 +247,13 @@ local config = {
 
     vim.keymap.set("i", "kk", "<Esc>")
 
+    -- ensure <C-BS> works in termianl nvim
+    vim.cmd([[
+    noremap! <C-BS> <C-w>
+    noremap! <C-h> <C-w> 
+    ]])
+    vim.keymap.set("i", "<C-BS>", "<C-w>")
+
     vim.keymap.set("v", "zy", '"+y')
 
     -- Set autocommands
@@ -270,12 +278,20 @@ local config = {
       pattern = "*.go",
       command = "nnoremap <silent> <leader>zca :w<CR>:vs term://go run %<CR>i"
     })
+    vim.api.nvim_create_autocmd("BufWinEnter", {
+      desc = "run cpp in split terminal",
+      group = "code_run",
+      pattern = "*.cpp",
+      command = "nnoremap <silent> <leader>zca :w<CR>:vs term://clang++ % -o .nvim_run.out && ./.nvim_run.out && rm ./.nvim_run.out <CR>i"
+    })
+    
 
     -- transparent background
     vim.cmd('autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE " transparent bg " transparent background')
 
     -- restore cursor postion to the last editing position
     vim.cmd([[autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif]])
+
 
     -- vim.api.nvim_create_augroup("nvim_set", {clear = true})
     -- vim.api.nvim_create_autocmd("VimEnter", {
