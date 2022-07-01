@@ -45,13 +45,13 @@ local config = {
 
 
   header = {
-"   ▄───▄                                          ",
-"   █▀█▀█  ███████╗░█████╗░░█████╗░██╗░░██╗        ",
-"  ─█▄█▄█─ ╚════██║██╔══██╗██╔══██╗██║░██╔╝        ",
-"▄▄▄ ███   ░░███╔═╝███████║██║░░╚═╝█████═╝░        ",
-"█▐█ ████  ██╔══╝░░██╔══██║██║░░██╗██╔═██╗░  (●̮̮̃•̃)  ",
-"█   ████  ███████╗██║░░██║╚█████╔╝██║░╚██╗   /█\\  ",
-"▀▀▀▀▀▀▀▀  ╚══════╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚═╝   .Π.  ",
+"   ▄───▄                                              ",
+"   █▀█▀█     ███████╗░█████╗░░█████╗░██╗░░██╗         ",
+"  ─█▄█▄█─    ╚════██║██╔══██╗██╔══██╗██║░██╔╝         ",
+"▄▄▄ ███      ░░███╔═╝███████║██║░░╚═╝█████═╝░         ",
+"█▐█ ████     ██╔══╝░░██╔══██║██║░░██╗██╔═██╗░    (●̮̮̃•̃)  ",
+"█   ████     ███████╗██║░░██║╚█████╔╝██║░╚██╗    /█\\  ",
+"▀▀▀▀▀▀▀▀     ╚══════╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚═╝    .Π.  ",
     },
 
   -- Default theme configuration
@@ -104,6 +104,8 @@ local config = {
 
       -- You can also add new plugins here as well:
       -- { "andweeb/presence.nvim" },
+      {"easymotion/vim-easymotion"}, -- I map s in the normal mode
+      {"tpope/vim-surround"} -- default S in the visual mode
       -- {
       --   "ray-x/lsp_signature.nvim",
       --   event = "BufRead",
@@ -243,6 +245,7 @@ local config = {
   polish = function()
     -- Set key bindings
     vim.keymap.set("n", "<C-s>", ":w!<CR>")
+    vim.cmd("nmap s <Plug>(easymotion-overwin-f2)") -- vim-easymotion
     vim.keymap.set("n", "zp", '"+p')
 
     vim.keymap.set("i", "kk", "<Esc>")
@@ -270,19 +273,19 @@ local config = {
       desc = "run python in split terminal",
       group = "code_run",
       pattern = "*.py",
-      command = "nnoremap <silent> <leader>zca :w<CR>:vs term://python %<CR>i"
+      command = "nnoremap <silent> <leader>zca :w<CR>:vs term://time python %<CR>i"
     })
     vim.api.nvim_create_autocmd("BufWinEnter", {
       desc = "run go in split terminal",
       group = "code_run",
       pattern = "*.go",
-      command = "nnoremap <silent> <leader>zca :w<CR>:vs term://go run %<CR>i"
+      command = "nnoremap <silent> <leader>zca :w<CR>:vs term://time go run %<CR>i"
     })
     vim.api.nvim_create_autocmd("BufWinEnter", {
       desc = "run cpp in split terminal",
       group = "code_run",
       pattern = "*.cpp",
-      command = "nnoremap <silent> <leader>zca :w<CR>:vs term://clang++ % -o .nvim_run.out && ./.nvim_run.out && rm ./.nvim_run.out <CR>i"
+      command = "nnoremap <silent> <leader>zca :w<CR>:vs term://clang++ % -o .nvim_run.out && time ./.nvim_run.out && rm ./.nvim_run.out <CR>i"
     })
     
 
