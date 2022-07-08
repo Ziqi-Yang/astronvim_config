@@ -285,7 +285,7 @@ local config = {
       desc = "run cpp in split terminal",
       group = "code_run",
       pattern = "*.cpp",
-      command = "nnoremap <silent> <leader>zca :w<CR>:vs term://clang++ % -o .nvim_run.out && time ./.nvim_run.out && rm ./.nvim_run.out <CR>i"
+      command = "nnoremap <silent> <leader>zca :w<CR>:vs term://clang++ % -fsanitize=undefined -o .nvim_run.out && time ./.nvim_run.out && rm ./.nvim_run.out <CR>i"
     })
     
 
